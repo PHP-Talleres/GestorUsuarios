@@ -13,7 +13,7 @@
         return $diassemanaN[$diasemana].", $dia de ". $mesesN[$mes] ." de $ano ";
     }
 
-    function  crear_imagen()
+    function crear_imagen()
     {
         $im = imagecreate(400, 400) or die("Error en la creacion de imagenes");
         $R = rand(0,255);
@@ -44,6 +44,55 @@
         }
         imagepng($im, "images/imagen.png");
         imagedestroy($im);
+    }
+
+    function validarNombre($nombre){
+        $REGEX_nombre = "/^[a-zA-Z][a-zA-Z ]+$/";
+        if (preg_match($REGEX_nombre, $nombre)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validarApellido($apellido)
+    {
+        $REGEX_apellido = "/^[a-zA-Z][a-zA-Z ]+$/";
+        if (preg_match($REGEX_apellido, $apellido)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validarEmail($email)
+    {
+        $REGEX_email = "/^[a-zA-Z][a-zA-Z0-9\.]*(@[a-z]+\\.[a-z]+){1}$/";
+        if (preg_match($REGEX_email, $email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validarCedula($cedula)
+    {
+        $REGEX_cedula = "/^[0-9]{1,10}$/";
+        if (preg_match($REGEX_cedula, $cedula)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validarEdad($edad)
+    {
+        $REGEX_edad = "/^[0-9]{1,10}$/";
+        if (preg_match($REGEX_edad, $edad)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 ?>
