@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+}
+
+table,
+tr,
+td,
+th,
+thead {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+div {
+    border-radius: 5px;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+}

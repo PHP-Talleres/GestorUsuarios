@@ -1,0 +1,64 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+div {
+    border-radius: 5px;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+}
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #210601;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input[type=submit] {
+    width: 50%;
+    background-color: #ee883a;
+    color: #ffefec;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+
+}
+
+input[type=submit]:hover {
+    background-color: #ec7c26;
+}
+
+div.form {
+    padding: 1%;
+    border: dashed #766b69 2px;
+}
+
+div.banner {
+    margin: auto;
+    padding: 2%;
+    border: dashed orange 2px;
+    text-align: center;
+}
+
+div.error_text {
+    color: red;
+}
+
+div.success_text {
+    color: green;
+}
+
+div.paragraph {
+    color: black;
+}
