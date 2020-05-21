@@ -1,5 +1,6 @@
 <?php
 include_once dirname(__FILE__) . '/../model/persona.php';
+include_once dirname(__FILE__) . '/../config/config.php';
 function insert_into_Personas($persona)
 {
     $sql_search = 'SELECT * FROM Personas WHERE Cedula = ';
@@ -97,3 +98,101 @@ function list_Personas($parameter, $type){
         return $resultado;
     }
 }
+
+function checkTables($nameTable){
+    $sql = 'SHOW tables LIKE \'' . $nameTable . '\'';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql)) {
+            if (mysqli_affected_rows($con) > 0){
+                echo "<br><div class=\"result_query success_text\">Ya se creo la tabla " . $nameTable . "</div>";
+                mysqli_close($con);
+                return true;
+            }
+            else{
+                echo "<br><div class=\"result_query error_text\"> No se ha creado la tabla " . $nameTable . "</div>";
+                mysqli_close($con);
+                return false;
+            }    
+        } else {
+            echo "<br><div class=\"result_query error_text\"> Error en la verificación: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }
+    mysqli_close($con);
+    return false;
+}
+
+function createTablePersonas(){
+    $sql_personas = 'CREATE TABLE personas (
+        Nombre varchar(50) NOT NULL,
+        Apellido varchar(50) NOT NULL,
+        Correo_electronico varchar(100) NOT NULL,
+        Edad int(3) NOT NULL,
+        Cedula bigint(20) NOT NULL,
+        PRIMARY KEY (Cedula)
+    );';
+
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql_personas)) {
+            echo "<br><div class=\"result_query success_text\">Ya se creo la tabla Personas" . "</div>";
+            mysqli_close($con);
+            return true;
+        } else {
+            echo "<br><div class=\"result_query error_text\"> Error en la creación de la tabla Personas: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }
+    mysqli_close($con);
+}
+
+function createTableUsuarios()
+{
+    $sql_personas = 'CREATE TABLE usuarios (
+        Id int(11) NOT NULL,
+        username varchar(100) NOT NULL UNIQUE,
+        Rol char(7) NOT NULL,
+        Cedula bigint(20) NOT NULL,
+        Contrasenia varchar(100),
+        PRIMARY KEY (Id, Cedula)
+    );';
+
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql_personas)) {
+            $sql_alter = ' ALTER TABLE usuarios
+                            MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;';
+            if(mysqli_query($con, $sql_alter)){
+                echo "<br><div class=\"result_query success_text\">Ya se creo la tabla Usuarios" . "</div>";
+                mysqli_close($con);
+                return true;
+            }else{
+                echo "<br><div class=\"result_query error_text\"> Error en la alteración de la tabla Usuarios: " . mysqli_error($con)  . "</div>";
+                mysqli_close($con);
+                return false; 
+            }   
+        } else {
+            echo "<br><div class=\"result_query error_text\"> Error en la creación de la tabla Usuarios: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }
+    mysqli_close($con);
+}
+
+?>

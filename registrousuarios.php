@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/gestor.css">
-    <title>Gestor tabla personas</title>
+    <title>Registro de usuarios</title>
 </head>
 
 <body>
@@ -13,22 +13,9 @@
         <a href="index.php">Regresar</a>
     </div>
 
-    <h1>Gestor para la tabla personas</h1>
+    <h1>Registro de usuarios</h1>
 
-    <h2>Listado de personas</h2>
-
-    <div>
-        <table>
-            <tr>
-                <td><a href="list.php?parameter=cedula&type=ascending">Ascendente por Cedula</a></td>
-                <td><a href="list.php?parameter=cedula&type=descending">Descendente por Cedula</a></td>
-                <td><a href="list.php?parameter=nombre&type=ascending">Ascendente por Nombre</a></td>
-                <td><a href="list.php?parameter=nombre&type=descending">Descendente por Nombre</a></td>
-            </tr>
-        </table>
-    </div>
-
-    <h2>Crear y actualizar personas</h2>
+    <h2>Registrar un nuevo usuario</h2>
     <br>
     <div class="form">
         <form action="gestor.php" method="post">
@@ -91,28 +78,6 @@
         }
         ?>
     </div>
-    <br><br>
-    <h2>Eliminar personas</h2>
-    <br>
-    <div class="form">
-        <form action="gestor.php" method="get">
-            <p>
-                <label>Cedula</label>
-                <input id='cedula' name='cedula' required type='number'>
-            </p>
-            <p>
-                <input class='button' type='submit' value='Eliminar'>
-            </p>
-        </form>
-        <?php
-        include_once dirname(__FILE__) . '/config/config.php';
-        include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
-        if (isset($_GET["cedula"])) {
-            delete_into_Personas($_GET["cedula"]);
-        }
-        ?>
-    </div>
-
 
 </body>
 
