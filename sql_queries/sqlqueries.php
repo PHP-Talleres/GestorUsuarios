@@ -165,7 +165,8 @@ function createTableUsuarios()
         Rol char(7) NOT NULL,
         Cedula bigint(20) NOT NULL,
         Contrasenia varchar(100),
-        PRIMARY KEY (Id, Cedula)
+        PRIMARY KEY (Id, Cedula),
+        FOREIGN KEY (Cedula) REFERENCES personas(Cedula)
     );';
 
     // Crear conexión
