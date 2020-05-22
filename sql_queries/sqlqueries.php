@@ -1,5 +1,6 @@
 <?php
 include_once dirname(__FILE__) . '/../model/persona.php';
+include_once dirname(__FILE__) . '/../model/usuario.php';
 include_once dirname(__FILE__) . '/../config/config.php';
 function insert_into_Personas($persona)
 {
@@ -191,6 +192,63 @@ function createTableUsuarios()
             echo "<br><div class=\"result_query error_text\"> Error en la creación de la tabla Usuarios: " . mysqli_error($con)  . "</div>";
             mysqli_close($con);
             return false;
+        }
+    }
+    mysqli_close($con);
+}
+
+function insert_into_Usuarios($usuario)
+{
+    $user_type = 'USER';
+    $sql_search = 'SELECT * FROM Usuarios';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        //Query for search of Cedula
+        if (mysqli_query($con, $sql_search)) {
+            if (mysqli_affected_rows($con) == 0) {
+                $user_type = 'ADMIN';
+            }
+        }
+    }
+    mysqli_close($con);
+    
+    $sql = 'INSERT INTO Usuarios (username, Rol, Cedula, Contrasenia) VALUES (';
+    $sql .= '\'' . $usuario->username . '\'';
+    $sql .= ', ';
+    $sql .= '\'' . $user_type . '\'';
+    $sql .= ', ';
+    $sql .= $usuario->cedula;
+    $sql .= ', ';
+    $sql .= '\'' . $usuario->password . '\'';
+    $sql .= ')';
+    
+    $sql_search_cedula = 'SELECT * FROM Usuarios WHERE Cedula = ';
+    $sql_search_cedula .= $usuario->cedula;
+
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql_search_cedula)) {
+            //Query for search of Cedula
+            if (mysqli_affected_rows($con) == 0) {
+                //If the search returns a number equals to 0 is that the Cedula is not present
+                if (mysqli_query($con, $sql)) {
+                    echo "<br><div class=\"result_query success_text\">¡CREADO!"  . "</div>";
+                } else {
+                    echo "<br><div class=\"result_query error_text\">Error en la inserción: " . mysqli_error($con)  . "</div>";
+                }
+            } else {
+                echo "<br><div class=\"result_query error_text\">Cédula ya existe dentro de la base de datos" . "</div>";
+            }
+        }else{
+           echo "<br><div class=\"result_query error_text\">Error en la inserción: " . mysqli_error($con)  . "</div>"; 
         }
     }
     mysqli_close($con);
