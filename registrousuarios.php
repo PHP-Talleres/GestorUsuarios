@@ -43,7 +43,7 @@
             $usuario = new Usuario;
             $usuario->username = $_POST["username"];
             $usuario->cedula = $_POST["cedula"];
-            $usuario->password = $_POST["password"];
+            $usuario->password = password_hash($_POST["password"], PASSWORD_DEFAULT);
             insert_into_Usuarios($usuario);
         }
         ?>

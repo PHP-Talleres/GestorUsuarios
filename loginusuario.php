@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/gestor.css">
-    <title>Registro de usuarios</title>
+    <title>Login de usuarios</title>
 </head>
 
 <body>
@@ -13,31 +13,18 @@
         <a href="index.php">Regresar</a>
     </div>
 
-    <h1>Registro de usuarios</h1>
-
-    <h2>Registrar un nuevo usuario</h2>
+    <h1>Login de usuarios</h1>
+    
     <br>
     <div class="form">
         <form action="gestor.php" method="post">
             <p>
-                <label>Cedula</label>
-                <input id='cedula' name='cedula' required type='number'>
+                <label>Nombre de usuario</label>
+                <input id='username' name='username' required type='text'>
             </p>
             <p>
-                <label>Nombre</label>
-                <input id='nombre' name='nombre' required type='text'>
-            </p>
-            <p>
-                <label>Apellido</label>
-                <input id='apellido' name='apellido' required type='text'>
-            </p>
-            <p>
-                <label>Correo electrónico</label>
-                <input id='email' name='email' required type='text'>
-            </p>
-            <p>
-                <label>Edad</label>
-                <input id='edad' name='edad' required type='number'>
+                <label>Contraseña</label>
+                <input id='password' name='password' required type='password'>
             </p>
             <p>
                 <input class='button' type='submit' value='Enviar'>
