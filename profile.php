@@ -24,22 +24,32 @@
                     <th>Apellido</th>
                     <th>Edad</th>
                     <th>Correo Electrónico</th>
+                    <th>Nombre de usuario</th>
+                    <th>Rol</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 include_once dirname(__FILE__) . '/config/config.php';
                 include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
-                if(isset($_GET['username'])){
+                if (isset($_GET['username'])) {
                     $persona = getPersona_Usuario($_GET['username']);
-                    if ($persona != null && $persona != false) { 
+                    if ($persona != null && $persona != false) {
                         echo '<tr>';
                         echo '<td>' . $persona['Cedula'] . '</td>';
                         echo '<td>' . $persona['Nombre'] . '</td>';
                         echo '<td>' . $persona['Apellido'] . '</td>';
                         echo '<td>' . $persona['Edad'] . '</td>';
                         echo '<td>' . $persona['Correo_electronico'] . '</td>';
-                        echo '</tr>';
+                        $persona = getPersona_Usuario($_GET['username']);
+                        if ($persona != null && $persona != false) {
+                            $usuario = getPersonaUsuario($persona['Cedula']);
+                            if ($usuario != null && $usuario != false) {
+                                echo '<td>' . $usuario['username'] . '</td>';
+                                echo '<td>' . $usuario['Rol'] . '</td>';
+                                echo '</tr>';
+                            }
+                        }
                     }
                 }
                 ?>

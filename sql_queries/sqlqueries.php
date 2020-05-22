@@ -360,4 +360,28 @@ function getPersona_Usuario($username){
     mysqli_close($con);
     return false;
 }
+
+function getPersonaUsuario($cedula){
+    $sql_search = 'SELECT * FROM Usuarios WHERE Cedula = ';
+    $sql_search .= $cedula;
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    if (mysqli_query($con, $sql_search)) {
+        //If the search returns a number greater than 0 is that the Cedula is present 
+        if (mysqli_affected_rows($con) > 0) {
+            $resultado = mysqli_query($con, $sql_search);
+            $fila = mysqli_fetch_array($resultado);
+            mysqli_close($con);
+            return $fila;
+        }else{
+            echo "<br><div class=\"result_query error_text\"> No se encontro usuario con dicha cedula" . $cedula  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }else{
+        echo "<br><div class=\"result_query error_text\"> Error en la bíusqueda de Rol: " . mysqli_error($con)  . "</div>";
+        mysqli_close($con);
+        return false;
+    }
+}
 ?>
