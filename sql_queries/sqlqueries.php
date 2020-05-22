@@ -100,6 +100,20 @@ function list_Personas($parameter, $type){
     }
 }
 
+function list_Usuarios()
+{
+    $sql = 'SELECT * FROM Usuarios';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        return null;
+    } else {
+        $resultado = mysqli_query($con, $sql);
+        return $resultado;
+    }
+}
+
 function checkTables($nameTable){
     $sql = 'SHOW tables LIKE \'' . $nameTable . '\'';
     // Crear conexión
@@ -283,7 +297,7 @@ function login($usuario)
                 if(password_verify($usuario->password, $fila['Contrasenia'])){
                     echo "<br><div class=\"result_query success_text\">Correcto Login de " . $usuario->username . "</div>";
                     mysqli_close($con);
-                    return true;
+                    return $fila['Rol'];
                 }else{
                     echo "<br><div class=\"result_query error_text\"> Error en el login de: " . $usuario->username  . "</div>";
                     mysqli_close($con);
@@ -303,4 +317,47 @@ function login($usuario)
     return false;
 }
 
+function getPersona_Usuario($username){
+    $sql = 'SELECT * FROM Usuarios WHERE Username = \'' . $username . '\'';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql)) {
+            if (mysqli_affected_rows($con) > 0) {
+                $resultado = mysqli_query($con, $sql);
+                $fila = mysqli_fetch_array($resultado);
+                $cedula = $fila['Cedula'];
+                $sql_personas = 'SELECT * FROM Personas WHERE Cedula = \'' . $cedula . '\'';
+                if (mysqli_query($con, $sql_personas)) {
+                    if (mysqli_affected_rows($con) > 0) {
+                        $resultado = mysqli_query($con, $sql_personas);
+                        $fila = mysqli_fetch_array($resultado);
+                        mysqli_close($con);
+                        return $fila;
+                    }else{
+                        echo "<br><div class=\"result_query error_text\"> No se ha encontrado la cédula del usuario en la tabla personas." . "</div>";
+                        mysqli_close($con);
+                        return false;
+                    }
+                }else{
+                    echo "<br><div class=\"result_query error_text\"> Error en la cedula del usuario " . "</div>";
+                    mysqli_close($con);
+                    return false;
+                }
+            } else {
+                mysqli_close($con);
+                return false;
+            }
+        } else {
+            echo "<br><div class=\"result_query error_text\"> Error en la verificación: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }
+    mysqli_close($con);
+    return false;
+}
 ?>

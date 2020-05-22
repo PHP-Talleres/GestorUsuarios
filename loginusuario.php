@@ -38,7 +38,15 @@
             $usuario = new Usuario;
             $usuario->username = $_POST["username"];
             $usuario->password = $_POST["password"];
-            login($usuario);
+            $respuesta = login($usuario);
+            if($respuesta != false){
+                if($respuesta == "ADMIN"){
+                    header('Location: listadmin.php');
+                }
+                if($respuesta == "USER"){
+                    header('Location: profile.php?username=' . $usuario->username);
+                }
+            }
         }
         ?>
     </div>
