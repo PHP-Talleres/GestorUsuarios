@@ -267,4 +267,40 @@ function insert_into_Usuarios($usuario)
     mysqli_close($con);
 }
 
+function login($usuario)
+{
+    $sql = 'SELECT * FROM Usuarios WHERE Username = \'' . $usuario->username . '\'';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    // Verificar conexión
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql)) {
+            if (mysqli_affected_rows($con) > 0) {
+                $resultado=mysqli_query($con, $sql);
+                $fila = mysqli_fetch_array($resultado);
+                if(password_verify($usuario->password, $fila['Contrasenia'])){
+                    echo "<br><div class=\"result_query success_text\">Correcto Login de " . $usuario->username . "</div>";
+                    mysqli_close($con);
+                    return true;
+                }else{
+                    echo "<br><div class=\"result_query error_text\"> Error en el login de: " . $usuario->username  . "</div>";
+                    mysqli_close($con);
+                    return false;
+                }
+            } else {
+                mysqli_close($con);
+                return false;
+            }
+        } else {
+            echo "<br><div class=\"result_query error_text\"> Error en la verificación: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
+        }
+    }
+    mysqli_close($con);
+    return false;
+}
+
 ?>

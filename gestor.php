@@ -31,7 +31,7 @@
     <h2>Crear y actualizar personas</h2>
     <br>
     <div class="form">
-        <form action="gestor.php" method="post">
+        <form action="gestor.php" method="post" autocomplete="off">
             <p>
                 <label>Cedula</label>
                 <input id='cedula' name='cedula' required type='number'>

@@ -14,10 +14,10 @@
     </div>
 
     <h1>Login de usuarios</h1>
-    
+
     <br>
     <div class="form">
-        <form action="gestor.php" method="post">
+        <form action="loginusuario.php" method="post" autocomplete="off">
             <p>
                 <label>Nombre de usuario</label>
                 <input id='username' name='username' required type='text'>
@@ -34,34 +34,11 @@
         include_once dirname(__FILE__) . '/config/config.php';
         include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
         include_once dirname(__FILE__) . '/utils/utils.php';
-        if (isset($_POST["cedula"]) && isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["email"]) && isset($_POST["edad"])) {
-            if (validarNombre($_POST["nombre"])) {
-                if (validarApellido($_POST["apellido"])) {
-                    if (validarEmail($_POST["email"])) {
-                        if (validarCedula($_POST["cedula"])) {
-                            if (validarEdad($_POST["edad"])) {
-                                $persona = new Persona;
-                                $persona->nombre = $_POST["nombre"];
-                                $persona->apellido = $_POST["apellido"];
-                                $persona->cedula = $_POST["cedula"];
-                                $persona->correo_electronico = $_POST["email"];
-                                $persona->edad = $_POST["edad"];
-                                insert_into_Personas($persona);
-                            } else {
-                                echo "<br><div class=\"result_query error_text\">Error en la edad ingresada" . "</div>";
-                            }
-                        } else {
-                            echo "<br><div class=\"result_query error_text\">Error en la cédula ingresada" . "</div>";
-                        }
-                    } else {
-                        echo "<br><div class=\"result_query error_text\">Error en el email ingresado" . "</div>";
-                    }
-                } else {
-                    echo "<br><div class=\"result_query error_text\">Error en el apellido ingresado" . "</div>";
-                }
-            } else {
-                echo "<br><div class=\"result_query error_text\">Error en el nombre ingresado" . "</div>";
-            }
+        if (isset($_POST["username"]) && isset($_POST["password"])) {
+            $usuario = new Usuario;
+            $usuario->username = $_POST["username"];
+            $usuario->password = $_POST["password"];
+            login($usuario);
         }
         ?>
     </div>

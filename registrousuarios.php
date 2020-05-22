@@ -18,7 +18,7 @@
     <h2>Registrar un nuevo usuario</h2>
     <br>
     <div class="form">
-        <form action="registrousuarios.php" method="post">
+        <form action="registrousuarios.php" method="post" autocomplete="off">
             <p>
                 <label>Cedula</label>
                 <input id='cedula' name='cedula' required type='number'>
