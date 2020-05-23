@@ -28,6 +28,8 @@ function insert_into_Personas($persona)
     // Verificar conexión
     if (mysqli_connect_errno()) {
         echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+        mysqli_close($con);
+        return false;
     } else {
         //Query for search of Cedula
         if (mysqli_query($con, $sql_search)) {
@@ -36,16 +38,24 @@ function insert_into_Personas($persona)
                 //If the Cedula is present its an UPDATE
                 if (mysqli_query($con, $sql_update)) {
                     echo "<br><div class=\"result_query success_text\">¡ACTUALIZADO!"  . "</div>";
+                    mysqli_close($con);
+                    return true;
                 }
                 else{
                     echo "<br><div class=\"result_query error_text\">Error en la actualización: " . mysqli_error($con)  . "</div>";
+                    mysqli_close($con);
+                    return false;
                 }   
             } 
             else{
                 if (mysqli_query($con, $sql)) {
                     echo "<br><div class=\"result_query success_text\">¡CREADO!"  . "</div>";
+                    mysqli_close($con);
+                    return true;
                 } else {
                     echo "<br><div class=\"result_query error_text\">Error en la inserción: " . mysqli_error($con)  . "</div>";
+                    mysqli_close($con);
+                    return false;
                 }
             }     
         }
@@ -63,12 +73,20 @@ function delete_into_Personas($cedula)
         echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
     } else {
         if (mysqli_query($con, $sql)) {
-            if (mysqli_affected_rows($con) > 0)
+            if (mysqli_affected_rows($con) > 0){
                 echo "<br><div class=\"result_query success_text\">¡EXITO!"  . "</div>";
-            else
+                mysqli_close($con);
+                return true;
+            } 
+            else{
                 echo "<br><div class=\"result_query error_text\"> No se ha borrado ningún registro" . "</div>";
+                mysqli_close($con);
+                return false;
+            }  
         } else {
             echo "<br><div class=\"result_query error_text\">Error en la inserción: " . mysqli_error($con)  . "</div>";
+            mysqli_close($con);
+            return false;
         }
     }
     mysqli_close($con);
@@ -262,20 +280,32 @@ function insert_into_Usuarios($usuario)
                     if (mysqli_affected_rows($con) == 0) {
                         if (mysqli_query($con, $sql)) {
                             echo "<br><div class=\"result_query success_text\">¡CREADO!"  . "</div>";
+                            return true;
+                            mysqli_close($con);
                         } else {
                             echo "<br><div class=\"result_query error_text\">Error en la inserción: " . mysqli_error($con)  . "</div>";
+                            return false;
+                            mysqli_close($con);
                         }
                     }else{
                         echo "<br><div class=\"result_query error_text\">Nombre de usuario ya existe dentro de la base de datos" . "</div>";
+                        return false;
+                        mysqli_close($con);
                     }
                 }else{
-                    echo "<br><div class=\"result_query error_text\">Error en la Búsqueda del nombre: " . mysqli_error($con)  . "</div>"; 
+                    echo "<br><div class=\"result_query error_text\">Error en la Búsqueda del nombre: " . mysqli_error($con)  . "</div>";
+                    return false;
+                    mysqli_close($con);
                 }
             } else {
                 echo "<br><div class=\"result_query error_text\">Cédula ya existe dentro de la base de datos" . "</div>";
+                return false;
+                mysqli_close($con);
             }
         }else{
-           echo "<br><div class=\"result_query error_text\">Error en la Búsqueda de la Cedula: " . mysqli_error($con)  . "</div>"; 
+           echo "<br><div class=\"result_query error_text\">Error en la Búsqueda de la Cedula: " . mysqli_error($con)  . "</div>";
+            return false;
+            mysqli_close($con); 
         }
     }
     mysqli_close($con);
