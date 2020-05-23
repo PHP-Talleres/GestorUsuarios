@@ -5,10 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/list.css">
+    <link rel="stylesheet" type="text/css" href="css/profileadmin.css">
     <title>Lista de usuarios</title>
 </head>
 
 <body>
+    <?php
+    include_once dirname(__FILE__) . '/config/config.php';
+    include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
+    if (isset($_POST['username'])) {
+        deleteUsuario($_POST['username']);
+    }
+    ?>
     <h1>Listado de personas</h1>
 
     <div>
@@ -31,7 +39,7 @@
                 if ($listPersonas != null) {
                     while ($fila = mysqli_fetch_array($listPersonas)) {
                         echo '<tr>';
-                        echo '<td>' . $fila['username'] . '</td>';
+                        echo '<td><a href="profileadmin.php?username=' . $fila['username'] . '">' . $fila['username'] . '</a></td>';
                         echo '<td>' . $fila['Rol'] . '</td>';
                         echo '</tr>';
                     }

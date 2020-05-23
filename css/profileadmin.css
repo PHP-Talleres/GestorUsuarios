@@ -1,0 +1,36 @@
+input[type=submit] {
+    width: 25%;
+    background-color: #ee883a;
+    color: #ffefec;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+
+}
+
+input[type=submit]:hover {
+    background-color: #ec7c26;
+}
+
+div {
+    border-radius: 5px;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+}
+
+div.result_query {
+    margin: auto;
+    padding: 1%;
+    border: dashed orange 2px;
+    text-align: center;
+}
+
+div.error_text {
+    color: red;
+}
+
+div.success_text {
+    color: green;
+}

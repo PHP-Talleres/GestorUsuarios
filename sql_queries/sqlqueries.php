@@ -304,6 +304,7 @@ function login($usuario)
                     return false;
                 }
             } else {
+                echo "<br><div class=\"result_query error_text\"> Usuario y contraseña inválidos" . "</div>";
                 mysqli_close($con);
                 return false;
             }
@@ -383,5 +384,38 @@ function getPersonaUsuario($cedula){
         mysqli_close($con);
         return false;
     }
+}
+
+function updateUserRol($username,$rol){
+    $sql_update = 'UPDATE Usuarios SET ';
+    $sql_update .= 'Rol = ' .  '\'' . $rol . '\'';
+    $sql_update .= 'WHERE Username = \'' . $username . '\'';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    if (mysqli_query($con, $sql_update)) {
+        echo "<br><div class=\"result_query success_text\">Rol actualizado a " . $rol . "</div>";
+    }else{
+        echo "<br><div class=\"result_query error_text\">Error en la actualización: " . mysqli_error($con)  . "</div>";
+    }
+    mysqli_close($con);
+}
+
+function deleteUsuario($username){
+    $sql = 'DELETE FROM Usuarios WHERE Username = \'' . $username . '\'';
+    // Crear conexión
+    $con = mysqli_connect(HOST_DB, USUARIO_DB, USUARIO_PASS, DATABASE);
+    if (mysqli_connect_errno()) {
+        echo "<br><div class=\"result_query error_text\"> Error en la conexión: " . mysqli_connect_error() . "</div>";
+    } else {
+        if (mysqli_query($con, $sql)) {
+            if (mysqli_affected_rows($con) > 0)
+                echo "<br><div class=\"result_query success_text\">Exito en la eliminación del usuario " . $username . "</div>";
+            else
+                echo "<br><div class=\"result_query error_text\"> No se ha borrado ningún registro" . "</div>";
+        } else {
+            echo "<br><div class=\"result_query error_text\">Error en el borrado: " . mysqli_error($con)  . "</div>";
+        }
+    }
+    mysqli_close($con);
 }
 ?>
