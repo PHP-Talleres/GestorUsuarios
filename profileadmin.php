@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorProfileAdmin'])) {
+    // Caduca en un año 
+    setcookie('contadorProfileAdmin', $_COOKIE['contadorProfileAdmin'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorProfileAdmin', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,6 +25,17 @@
     <div>
         <a href="listadmin.php">Volver a la lista de usuarios</a>
     </div>
+    <?php
+    if (isset($_COOKIE['contadorLogin'])) {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorLogin']+1) . '">Salir</a></div>';
+        echo '<br>';
+    } else {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+        echo '<br>';
+    }
+    ?>
     <?php
     include_once dirname(__FILE__) . '/config/config.php';
     include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
@@ -87,7 +107,7 @@
     </div>
     <br>
     </form>
-    
+
     <div>
         <form action="listadmin.php" method="post">
             <?php

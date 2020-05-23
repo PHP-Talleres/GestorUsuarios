@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorList'])) {
+    // Caduca en un año 
+    setcookie('contadorList', $_COOKIE['contadorList'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorList', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,7 +23,17 @@
     <div>
         <a href="gestor.php">Regresar al gestor</a>
     </div>
-    <br><br>
+    <?php
+    if (isset($_COOKIE['contadorList'])) {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorList']+1) . '">Salir</a></div>';
+        echo '<br>';
+    }else{
+        echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+        echo '<br><br>';
+    }
+    ?>
+
     <div>
         <table>
             <thead>

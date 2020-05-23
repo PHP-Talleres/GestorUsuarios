@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorLogin'])) {
+    // Caduca en un año 
+    setcookie('contadorLogin', $_COOKIE['contadorLogin'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorLogin', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,7 +21,17 @@
     <div>
         <a href="index.php">Regresar</a>
     </div>
-
+    <?php
+    if (isset($_COOKIE['contadorLogin'])) {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorLogin']+1) . '">Salir</a></div>';
+        echo '<br>';
+    } else {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+        echo '<br>';
+    }
+    ?>
     <h1>Login de usuarios</h1>
 
     <br>
@@ -39,11 +58,11 @@
             $usuario->username = $_POST["username"];
             $usuario->password = $_POST["password"];
             $respuesta = login($usuario);
-            if($respuesta != false){
-                if($respuesta == "ADMIN"){
+            if ($respuesta != false) {
+                if ($respuesta == "ADMIN") {
                     header('Location: listadmin.php');
                 }
-                if($respuesta == "USER"){
+                if ($respuesta == "USER") {
                     header('Location: profile.php?username=' . $usuario->username);
                 }
             }

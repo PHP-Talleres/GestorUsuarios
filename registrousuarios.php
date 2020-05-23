@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorRegistroUsuarios'])) {
+    // Caduca en un año 
+    setcookie('contadorRegistroUsuarios', $_COOKIE['contadorRegistroUsuarios'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorRegistroUsuarios', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,6 +21,18 @@
     <div>
         <a href="index.php">Regresar</a>
     </div>
+
+    <?php
+    if (isset($_COOKIE['contadorRegistroUsuarios'])) {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorRegistroUsuarios']+1) . '">Salir</a></div>';
+        echo '<br>';
+    } else {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+        echo '<br>';
+    }
+    ?>
 
     <h1>Registro de usuarios</h1>
 

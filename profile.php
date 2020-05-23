@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorProfile'])) {
+    // Caduca en un año 
+    setcookie('contadorProfile', $_COOKIE['contadorProfile'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorProfile', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,7 +23,17 @@
     <div>
         <a href="loginusuario.php">Salir de la sesion</a>
     </div>
-    <br><br>
+    <?php
+    if (isset($_COOKIE['contadorLogin'])) {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorLogin']+1) . '">Salir</a></div>';
+        echo '<br>';
+    } else {
+        echo '<br><br>';
+        echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+        echo '<br>';
+    }
+    ?>
     <div>
         <table>
             <thead>

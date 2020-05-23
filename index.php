@@ -1,10 +1,11 @@
 <?php
-    session_start();
-    if (isset($_SESSION['visitas'])) {
-        $_SESSION['visitas'] = $_SESSION['visitas'] + 1;
-    } else {
-        $_SESSION['visitas'] = 1;
-    } 
+if (isset($_COOKIE['contadorIndex'])) {
+    // Caduca en un año 
+    setcookie('contadorIndex', $_COOKIE['contadorIndex'] + 1, time() + 365 * 24 * 60 * 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorIndex', 1, time() + 365 * 24 * 60 * 60);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,15 +19,15 @@
 
 <body>
     <?php
-        include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
-        if($_SESSION['visitas'] == 1){
-            if (!checkTables("personas")) {
-                createTablePersonas();
-            }
-            if (!checkTables("usuarios")) {
-                createTableUsuarios();
-            }
-        }  
+    include_once dirname(__FILE__) . '/sql_queries/sqlqueries.php';
+    if (!isset($_COOKIE['contadorIndex'])) {
+        if (!checkTables("personas")) {
+            createTablePersonas();
+        }
+        if (!checkTables("usuarios")) {
+            createTableUsuarios();
+        }
+    }
     ?>
     <h1>Index de funcionalidades</h1>
     <div>
@@ -47,6 +48,17 @@
                 <tr>
                     <td>Login usuario</td>
                     <td><a href="loginusuario.php">Link</a></td>
+                </tr>
+                <tr>
+                    <td>Salir</td>
+                    <?php
+                        if (isset($_COOKIE['contadorIndex'])) {
+                        echo '<td><a href="salir.php?Contador=' . ($_COOKIE['contadorIndex']+1) . '">Salir</a></td>';
+                        } else {
+                            echo '<td><a href="salir.php?Contador=1' . '">Salir</a></td>';
+                        }
+                        
+                    ?>
                 </tr>
             </tbody>
             </tr>

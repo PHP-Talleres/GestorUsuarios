@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorGestor'])) {
+    // Caduca en un año 
+    setcookie('contadorGestor', $_COOKIE['contadorGestor'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorGestor', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,7 +21,17 @@
     <div>
         <a href="index.php">Regresar</a>
     </div>
-
+    <?php
+        if (isset($_COOKIE['contadorGestor'])) {
+            echo '<br><br>';
+            echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorGestor']+1) . '">Salir</a></div>';
+            echo '<br>';
+        }else{
+            echo '<br><br>';
+            echo '<div><a href="salir.php?Contador=1'  . '">Salir</a></div>';
+            echo '<br>';
+        }
+    ?>
     <h1>Gestor para la tabla personas</h1>
 
     <h2>Listado de personas</h2>

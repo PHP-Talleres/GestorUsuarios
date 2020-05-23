@@ -1,3 +1,12 @@
+<?php
+if (isset($_COOKIE['contadorArchivos'])) {
+    // Caduca en un año 
+    setcookie('contadorArchivos', $_COOKIE['contadorArchivos'] + 1, time() + 60);
+} else {
+    // Caduca en un año 
+    setcookie('contadorArchivos', 1, time() + 60);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +21,18 @@
     <div>
         <a href="index.php">Regresar</a>
     </div>
+    
+    <?php
+        if (isset($_COOKIE['contadorArchivos'])) {
+            echo '<br><br>';
+            echo '<div><a href="salir.php?Contador=' . ($_COOKIE['contadorArchivos']+1) . '">Salir</a></div>';
+            echo '<br>';
+        }else{
+            echo '<br><br>';
+            echo '<div><a href="salir.php?Contador=1' . '">Salir</a></div>';
+            echo '<br>';
+        }
+    ?>
     <h1>Gestor de archivos</h1>
 
     <div class="form">
@@ -50,13 +71,13 @@
 
     <div class="footer">
         <?php
-            include_once dirname(__FILE__) . '/utils/utils.php';
-            date_default_timezone_set('America/Bogota');
-            echo SpanishDate((new DateTime())->getTimestamp());
-            echo date('h:i:s A') . "</br>";
-            echo "<br>";
-            crear_imagen();
-            echo "<img src=images/imagen.png?" . date("U") . ">";
+        include_once dirname(__FILE__) . '/utils/utils.php';
+        date_default_timezone_set('America/Bogota');
+        echo SpanishDate((new DateTime())->getTimestamp());
+        echo date('h:i:s A') . "</br>";
+        echo "<br>";
+        crear_imagen();
+        echo "<img src=images/imagen.png?" . date("U") . ">";
         ?>
     </div>
 </body>
